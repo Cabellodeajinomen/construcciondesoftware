@@ -27,6 +27,8 @@ La relación entre las clases se representa de la siguiente manera:
             │
             └── Lista de Libros
     ```text
+    --- 
+    
 ## Integrantes
 - Gabriel Jara Zapana
 - Alex Rhoddo Pacheco
