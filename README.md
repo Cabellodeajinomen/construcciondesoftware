@@ -20,12 +20,13 @@ El proyecto trabaja con tres clases relacionadas:
 
 ## Estructura del proyecto
 La relación entre las clases se representa de la siguiente manera:
-```text
-Biblioteca
-    │
-    └── Lista de Secciones
+    ```text
+    Biblioteca
+        │
+        └── Lista de Secciones
             │
             └── Lista de Libros
+    ```text
 ## Integrantes
 - Gabriel Jara Zapana
 - Alex Rhoddo Pacheco
