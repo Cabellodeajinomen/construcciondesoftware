@@ -1,0 +1,29 @@
+package pe.edu.uls.falabella;
+
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+import pe.edu.uls.falabella.request.RequestProductoNuevo;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-09-10T04:29:17+0000",
+    comments = "version: 1.6.3, compiler: IncrementalProcessingEnvironment from gradle-java-compiler-worker-9.7.1.jar, environment: Java 25.0.4.1 (Microsoft)"
+)
+@Component
+public class MapperProductoImpl implements MapperProducto {
+
+    @Override
+    public Producto toProducto(RequestProductoNuevo request) {
+        if ( request == null ) {
+            return null;
+        }
+
+        Producto producto = new Producto();
+
+        producto.setNombre( request.nombre() );
+        producto.setPrecio( request.precio() );
+        producto.setStock( request.stock() );
+
+        return producto;
+    }
+}

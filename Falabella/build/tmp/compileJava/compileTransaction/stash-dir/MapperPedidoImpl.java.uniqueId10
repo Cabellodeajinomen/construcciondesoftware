@@ -1,0 +1,28 @@
+package pe.edu.uls.falabella;
+
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-09-10T04:23:20+0000",
+    comments = "version: 1.6.3, compiler: IncrementalProcessingEnvironment from gradle-java-compiler-worker-9.7.1.jar, environment: Java 25.0.4.1 (Microsoft)"
+)
+@Component
+public class MapperPedidoImpl implements MapperPedido {
+
+    @Override
+    public Pedido toPedido(RequestPedidoNuevo request) {
+        if ( request == null ) {
+            return null;
+        }
+
+        Pedido pedido = new Pedido();
+
+        pedido.setClienteId( request.clienteId() );
+        pedido.setProductoId( request.productoId() );
+        pedido.setCantidad( request.cantidad() );
+
+        return pedido;
+    }
+}
