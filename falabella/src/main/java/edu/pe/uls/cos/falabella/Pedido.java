@@ -3,20 +3,20 @@ package edu.pe.uls.cos.falabella;
 public class Pedido {
 
     private int id;
-    private int productoId;
     private int clienteId;
+    private int productoId;
     private int cantidad;
-    private String estado;
+    private double total;
 
     public Pedido() {
     }
 
-    public Pedido(int id, int productoId, int clienteId, int cantidad, String estado) {
+    public Pedido(int id, int clienteId, int productoId, int cantidad, double total) {
         this.id = id;
-        this.productoId = productoId;
         this.clienteId = clienteId;
+        this.productoId = productoId;
         this.cantidad = cantidad;
-        this.estado = estado;
+        this.total = total;
     }
 
     public int getId() {
@@ -27,20 +27,20 @@ public class Pedido {
         this.id = id;
     }
 
-    public int getProductoId() {
-        return productoId;
-    }
-
-    public void setProductoId(int productoId) {
-        this.productoId = productoId;
-    }
-
     public int getClienteId() {
         return clienteId;
     }
 
     public void setClienteId(int clienteId) {
         this.clienteId = clienteId;
+    }
+
+    public int getProductoId() {
+        return productoId;
+    }
+
+    public void setProductoId(int productoId) {
+        this.productoId = productoId;
     }
 
     public int getCantidad() {
@@ -51,11 +51,11 @@ public class Pedido {
         this.cantidad = cantidad;
     }
 
-    public String getEstado() {
-        return estado;
+    public double getTotal() {
+        return total;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setTotal(double total) {
+        this.total = total;
     }
 }

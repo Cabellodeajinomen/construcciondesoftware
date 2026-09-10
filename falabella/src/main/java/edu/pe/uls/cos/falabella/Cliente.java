@@ -2,25 +2,25 @@ package edu.pe.uls.cos.falabella;
 
 public class Cliente {
 
-    private int id;
+    private String dni;
     private String nombre;
-    private String email;
+    private String correo;
 
     public Cliente() {
     }
 
-    public Cliente(int id, String nombre, String email) {
-        this.id = id;
+    public Cliente(String dni, String nombre, String correo) {
+        this.dni = dni;
         this.nombre = nombre;
-        this.email = email;
+        this.correo = correo;
     }
 
-    public int getId() {
-        return id;
+    public String getDni() {
+        return dni;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public String getNombre() {
@@ -31,11 +31,11 @@ public class Cliente {
         this.nombre = nombre;
     }
 
-    public String getEmail() {
-        return email;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 }
