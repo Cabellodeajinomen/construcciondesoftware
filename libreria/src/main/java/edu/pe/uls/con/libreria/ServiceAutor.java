@@ -30,5 +30,9 @@ public class ServiceAutor {
     public List<Autor> consultarPorNacionalidad(String nacionalidad) {
         return repoAutor.findByNacionalidadIgnoreCase(nacionalidad);
     }
+   
+    public List<Autor> consultarPorNombre(String nombres) {
+        return repoAutor.findByNombresContainingIgnoreCase(nombres);
+    }
 }
 

@@ -34,5 +34,9 @@ public class ControllerAutor {
     public List<ResponseAutor> consultarAutorPorNacionalidad(@PathVariable(name = "nacionalidad") String nacionalidad) {
         return serviceAutor.consultarPorNacionalidad(nacionalidad).stream().map(a -> mapperAutor.toResponse(a)).toList();
     }
-}
 
+    @GetMapping("/autor/nombre/{nombres}")
+    public List<ResponseAutor> consultarAutorPorNombre(@PathVariable(name = "nombres") String nombres) {
+        return serviceAutor.consultarPorNombre(nombres).stream().map(a -> mapperAutor.toResponse(a)).toList();
+    }
+}

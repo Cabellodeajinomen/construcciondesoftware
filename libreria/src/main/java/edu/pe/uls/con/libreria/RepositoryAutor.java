@@ -10,5 +10,7 @@ public interface RepositoryAutor extends JpaRepository<Autor, Integer> {
     Optional<Autor> findByNombresIgnoreCaseAndApellidosIgnoreCase(String nombres, String apellidos);
 
     List<Autor> findByNacionalidadIgnoreCase(String nacionalidad);
+    
+    List<Autor> findByNombresContainingIgnoreCase(String nombres);
 }
 
