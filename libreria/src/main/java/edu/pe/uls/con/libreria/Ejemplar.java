@@ -1,7 +1,7 @@
-package edu.pe.uls.con.libreria.dominio.entity;
+package edu.pe.uls.con.libreria;
 
 
-import edu.pe.uls.con.libreria.Libro;
+import edu.pe.uls.con.libreria.dominio.entity.EstadoEjemplar;
 import jakarta.persistence.*;
 
 /**
