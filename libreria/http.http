@@ -1,0 +1,21 @@
+@host = https://reimagined-yodel-ppqp5wvvwqwc7r9q-8080.app.github.dev
+### 1. Registrar socio
+POST {{host}}/socio/nuevo
+Content-Type: application/json
+
+{ "nombre": "Ana Torres", "documento": "45678912" }
+
+### 2. Registrar ejemplar (idLibro debe existir en tu tabla libro)
+POST {{host}}/ejemplar/nuevo
+Content-Type: application/json
+
+{ "idLibro": 1, "codigoBarras": "EJ-0001" }
+
+### 3. Registrar préstamo (usa los ids que devolvieron los pasos anteriores)
+POST {{host}}/prestamo/nuevo
+Content-Type: application/json
+
+{ "idSocio": 1, "items": [ { "idEjemplar": 1 } ] }
+
+
+
