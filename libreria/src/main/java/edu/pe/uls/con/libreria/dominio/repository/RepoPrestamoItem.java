@@ -11,7 +11,7 @@ import edu.pe.uls.con.libreria.dominio.projection.LibroPrestado;
 
 public interface RepoPrestamoItem extends JpaRepository<PrestamoItem, Integer> {
 
-    // Query 4 (JPQL, con parámetro): PrestamoItem + Ejemplar + Libro
+    // Query 4: PrestamoItem + Ejemplar + Libro
     @Query("""
         SELECT new edu.pe.uls.con.libreria.dominio.projection.LibroPrestado(
             l.id, l.titulo, COUNT(i))

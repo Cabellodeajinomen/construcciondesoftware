@@ -1,34 +1,34 @@
 @host = https://reimagined-yodel-ppqp5wvvwqwc7r9q-8080.app.github.dev
 
 
-### Q1 (JPQL + param) préstamos por DNI
+### Q1  préstamos por DNI
 GET {{host}}/consultas/prestamos/cliente/45678912
 
-### Q1 DNI inválido (400)
+### Q1 DNI inválido 
 GET {{host}}/consultas/prestamos/cliente/123
 
-### Q1 DNI inexistente (404)
+### Q1 DNI inexistente 
 GET {{host}}/consultas/prestamos/cliente/99999999
 
-### Q2 (JPQL + param) ítems pendientes de un cliente
+### Q2 prestamo pendientes de un cliente
 GET {{host}}/consultas/prestamos/pendientes/cliente/1
 
-### Q2 id negativo (400)
+### Q2 id negativo 
 GET {{host}}/consultas/prestamos/pendientes/cliente/-5
 
-### Q2 id no numérico (400)
+### Q2 id no numérico 
 GET {{host}}/consultas/prestamos/pendientes/cliente/abc
 
-### Q3 (JPQL + param) vencidos hoy / a una fecha
+### Q3  vencidos hoy / a una fecha
 GET {{host}}/consultas/prestamos/vencidos
 
-###
+###fecha limite
 GET {{host}}/consultas/prestamos/vencidos?fecha=2026-12-31
 
 ### Q3 fecha inválida (400)
 GET {{host}}/consultas/prestamos/vencidos?fecha=ayer
 
-### Q4 (JPQL + param) libros prestados al menos N veces
+### Q4  libros prestados al menos N veces
 GET {{host}}/consultas/libros/mas-prestados?minimo=1
 
 ### Q4 mínimo inválido (400)

@@ -13,7 +13,7 @@ public interface RepoEjemplar extends JpaRepository<Ejemplar, Integer> {
 
     boolean existsByCodigoBarras(String codigoBarras);
 
-    // Query nativo 1 (con parámetro): ejemplar + libro
+    // Query nativo 1  ejemplar + libro
     @Query(value = """
         SELECT l.titulo,
                e.codigo_barras,
