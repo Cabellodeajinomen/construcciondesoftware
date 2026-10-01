@@ -4,7 +4,6 @@
 POST {{host}}/cliente/nuevo
 Content-Type: application/json
 
-{ "nombreCompleto": "Ana Torres", "dni": "45678912", "email": "ana@correo.com" }
 
 ### 2. Crear libro
 POST {{host}}/libro/nuevo
@@ -23,6 +22,12 @@ POST {{host}}/ejemplar/nuevo
 Content-Type: application/json
 
 { "idLibro": 1, "codigoBarras": "EJ-0002" }
+
+### 4. Crear ejemplar 2
+POST {{host}}/ejemplar/nuevo
+Content-Type: application/json
+
+{ "idLibro": 5, "codigoBarras": "EJ-0008" }
 
 ### 5. Registrar préstamo 
 POST {{host}}/prestamo/nuevo
