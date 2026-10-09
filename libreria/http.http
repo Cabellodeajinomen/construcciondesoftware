@@ -4,57 +4,70 @@
 POST {{host}}/cliente/nuevo
 Content-Type: application/json
 
+{ "nombreCompleto": "Ana Pérez", "dni": "45678912", "email": "ana.perez@mail.com" }
 
-### 2. Crear libro
+### 2. Crear autor
+POST {{host}}/autor/nuevo
+Content-Type: application/json
+
+{ "nombres": "Gabriel", "apellidos": "García Márquez", "nacionalidad": "Colombiana" }
+
+### 3. Crear editorial
+POST {{host}}/editorial/nuevo
+Content-Type: application/json
+
+{ "nombre": "Sudamericana", "paisOrigen": "Argentina", "anioFundacion": 1939 }
+
+### 4. Crear categoría
+POST {{host}}/categoria/nuevo
+Content-Type: application/json
+
+{ "nombre": "Novela", "descripcion": "Ficción narrativa" }
+
+### 5. Crear libro (FK a autor, editorial y categoría: usa los ids creados arriba)
 POST {{host}}/libro/nuevo
 Content-Type: application/json
 
-{ "titulo": "Cien años de soledad", "autor": "Gabriel García Márquez", "isbn": "978-84-233-5000-1" }
+{ "titulo": "Cien años de soledad", "isbn": "978-84-233-5000-1", "idAutor": 1, "idEditorial": 1, "idCategoria": 1 }
 
-### 3. Crear ejemplar 1 
+### 6. Crear ejemplar (idLibro = id del libro del paso 5)
 POST {{host}}/ejemplar/nuevo
 Content-Type: application/json
 
-{ "idLibro": 3, "codigoBarras": "EJ-0005" }
+{ "idLibro": 1, "codigoBarras": "EJ-0010" }
 
-### 4. Crear ejemplar 2
-POST {{host}}/ejemplar/nuevo
-Content-Type: application/json
-
-{ "idLibro": 1, "codigoBarras": "EJ-0002" }
-
-### 4. Crear ejemplar 2
-POST {{host}}/ejemplar/nuevo
-Content-Type: application/json
-
-{ "idLibro": 5, "codigoBarras": "EJ-0008" }
-
-### 5. Registrar préstamo 
+### 7. Registrar préstamo (idEjemplar = id del ejemplar del paso 6)
 POST {{host}}/prestamo/nuevo
 Content-Type: application/json
 
-{ "idCliente": 1, "items": [ { "idEjemplar": 3 } ] }
+{ "idCliente": 1, "items": [ { "idEjemplar": 1 } ] }
 
-### 6. Registrar devolución (idPrestamo devuelto en el paso 5)
+### 8. Registrar devolución (idPrestamo = id devuelto en el paso 7)
 POST {{host}}/devolucion/nuevo
 Content-Type: application/json
 
-{ "idPrestamo": 5, "items": [ { "idEjemplar":3, "danado": true } ] }
+{ "idPrestamo": 1, "items": [ { "idEjemplar": 1, "danado": false } ] }
 
-### 7. Error: cliente que no existe (debe dar 404)
+### 9. Error: libro con autor que no existe (404)
+POST {{host}}/libro/nuevo
+Content-Type: application/json
+
+{ "titulo": "Libro sin autor", "isbn": "978-0-000-00000-0", "idAutor": 999, "idEditorial": 1, "idCategoria": 1 }
+
+### 10. Error: cliente que no existe (404)
 POST {{host}}/prestamo/nuevo
 Content-Type: application/json
 
 { "idCliente": 999, "items": [ { "idEjemplar": 1 } ] }
 
-### 8. Error: préstamo sin ítems (debe dar 400)
+### 11. Error: préstamo sin ítems (400)
 POST {{host}}/prestamo/nuevo
 Content-Type: application/json
 
 { "idCliente": 1, "items": [] }
 
-### 9. Error: ejemplar repetido 
+### 12. Error: ejemplar repetido (409)
 POST {{host}}/ejemplar/nuevo
 Content-Type: application/json
 
-{ "idLibro": 1, "codigoBarras": "EJ-0001" }
+{ "idLibro": 1, "codigoBarras": "EJ-0010" }

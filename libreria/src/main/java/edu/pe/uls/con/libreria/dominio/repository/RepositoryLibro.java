@@ -11,7 +11,7 @@ public interface RepositoryLibro extends JpaRepository<Libro, Integer> {
 
     Optional<Libro> findByIsbn(String isbn);
 
-    List<Libro> findByAutorIgnoreCase(String autor);
+    List<Libro> findByAutorApellidosContainingIgnoreCase(String apellidos);
 
     List<Libro> findByTituloContainingIgnoreCase(String texto);
 }

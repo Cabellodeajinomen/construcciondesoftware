@@ -1,80 +1,125 @@
-@host = https://reimagined-yodel-ppqp5wvvwqwc7r9q-8080.app.github.dev
+@host = https://turbo-fiesta-g4445jw46vpj3w7jq-8080.app.github.dev
 
-### Consultas por id: entidades del catálogo
+### ==================================================
+### CONSULTAS POR ID: CATÁLOGO
+### ==================================================
+
+### 1. Autor existente
 GET {{host}}/autor/1
 
-###
-GET {{host}}/categoria/1
+### 1.1 Autor inexistente (404)
+GET {{host}}/autor/99999
 
-###
-GET {{host}}/cliente/1
+### 2. Editorial existente
+GET {{host}}/editorial/6
 
-###
-GET {{host}}/editorial/1
+### 2.1 Editorial inexistente (404)
+GET {{host}}/editorial/99999
 
-###
-GET {{host}}/libro/1
+### 3. Categoria existente
+GET {{host}}/categoria/3
 
-### Consultas por id: préstamos y devoluciones
+### 3.1 Categoria inexistente (404)
+GET {{host}}/categoria/99999
+
+### 4. Libro existente (muestra autor, editorial y categoria)
+GET {{host}}/libro/8
+
+### 4.1 Libro inexistente (404)
+GET {{host}}/libro/99999
+
+### 5. Cliente existente
+GET {{host}}/cliente/3
+
+### 5.1 Cliente inexistente (404)
+GET {{host}}/cliente/99999
+
+### ========================================
+### CONSULTAS POR ID: PRESTAMOS Y DEVOLUCIONES
+### ========================================
+
+### 1. CONSULTAR EJEMPLAR EXISTENTE
 GET {{host}}/ejemplar/1
 
-###
-GET {{host}}/prestamo/1
+### 1.1 CONSULTAR EJEMPLAR INEXISTENTE
+GET {{host}}/ejemplar/99999
 
-###
-GET {{host}}/prestamo-item/1
 
-###
+### 2. CONSULTAR PRESTAMO EXISTENTE
+GET {{host}}/prestamo/4
+
+### 2.1 CONSULTAR PRESTAMO INEXISTENTE
+GET {{host}}/prestamo/99999
+
+
+### 3. CONSULTAR PRESTAMO ITEM EXISTENTE
+GET {{host}}/prestamo-item/7
+
+### 3.1 CONSULTAR PRESTAMO ITEM INEXISTENTE
+GET {{host}}/prestamo-item/99999
+
+
+### 4. CONSULTAR DEVOLUCION EXISTENTE
 GET {{host}}/devolucion/1
 
-###
+### 4.1 CONSULTAR DEVOLUCION INEXISTENTE
+GET {{host}}/devolucion/99999
+
+
+### 5. CONSULTAR DEVOLUCION ITEM EXISTENTE
 GET {{host}}/devolucion-item/1
 
+### 5.1 CONSULTAR DEVOLUCION ITEM INEXISTENTE
+GET {{host}}/devolucion-item/99999
 
-### Q1  préstamos por DNI
+### ==================================================
+### OTRAS CONSULTAS
+### ==================================================
+
+### Q1 Préstamos por DNI
 GET {{host}}/consultas/prestamos/cliente/45678912
 
-### Q1 DNI inválido 
+### Q1.1 DNI inválido (400)
 GET {{host}}/consultas/prestamos/cliente/123
 
-### Q1 DNI inexistente 
+### Q1.2 DNI inexistente (404)
 GET {{host}}/consultas/prestamos/cliente/99999999
 
-### Q2 prestamo pendientes de un cliente
+### Q2 Préstamos pendientes de un cliente
 GET {{host}}/consultas/prestamos/pendientes/cliente/1
 
-### Q2 id negativo 
+### Q2.1 Id negativo (400)
 GET {{host}}/consultas/prestamos/pendientes/cliente/-5
 
-### Q2 id no numérico 
+### Q2.2 Id no numérico (400)
 GET {{host}}/consultas/prestamos/pendientes/cliente/abc
 
-### Q3  vencidos hoy / a una fecha
+### Q3 Préstamos vencidos a hoy
 GET {{host}}/consultas/prestamos/vencidos
 
-###fecha limite
+### Q3.1 Préstamos vencidos a una fecha
 GET {{host}}/consultas/prestamos/vencidos?fecha=2026-12-31
 
-### Q3 fecha inválida (400)
+### Q3.2 Fecha inválida (400)
 GET {{host}}/consultas/prestamos/vencidos?fecha=ayer
 
-### Q4  libros prestados al menos N veces
+### Q4 Libros prestados al menos N veces
 GET {{host}}/consultas/libros/mas-prestados?minimo=1
 
-### Q4 mínimo inválido (400)
+### Q4.1 Mínimo inválido (400)
 GET {{host}}/consultas/libros/mas-prestados?minimo=0
 
-### Q5 (JPQL) multas por cliente
+### Q5 (JPQL) Multas por cliente
 GET {{host}}/consultas/devoluciones/multas-por-cliente
 
-### Q6 (JPQL) ítems devueltos con daño
+### Q6 (JPQL) Ítems devueltos con daño
 GET {{host}}/consultas/devoluciones/items-danados
 
-### N1 (nativo + param) ejemplares por estado
+### N1 (nativo) Ejemplares por estado
 GET {{host}}/consultas/ejemplares/estado/DISPONIBLE
 
-### N1 estado inválido (400)
+### N1.1 Estado inválido (400)
 GET {{host}}/consultas/ejemplares/estado/PERDIDO
 
-### N2 (nativo) actividad por cliente
+### N2 (nativo) Actividad por cliente
 GET {{host}}/consultas/clientes/actividad

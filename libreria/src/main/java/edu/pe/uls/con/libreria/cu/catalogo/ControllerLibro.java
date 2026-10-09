@@ -23,7 +23,7 @@ public class ControllerLibro {
     @PostMapping("/libro/nuevo")
     public ResponseLibro guardarLibro(@RequestBody RequestLibro nuevo) {
         Libro libro = mapperLibro.toLibro(nuevo);
-        libro = serviceLibro.registrarLibro(libro);
+        libro = serviceLibro.registrarLibro(libro, nuevo.idAutor(), nuevo.idEditorial(), nuevo.idCategoria());
         return mapperLibro.toResponse(libro);
     }
 
