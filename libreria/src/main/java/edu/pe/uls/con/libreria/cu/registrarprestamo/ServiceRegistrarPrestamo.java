@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import edu.pe.uls.con.libreria.Cliente;
-import edu.pe.uls.con.libreria.Ejemplar;
-import edu.pe.uls.con.libreria.RepositoryCliente;
+import edu.pe.uls.con.libreria.dominio.entity.Cliente;
+import edu.pe.uls.con.libreria.dominio.entity.Ejemplar;
+import edu.pe.uls.con.libreria.dominio.repository.RepositoryCliente;
 import edu.pe.uls.con.libreria.cu.registrarprestamo.request.RequestPrestamo;
 import edu.pe.uls.con.libreria.cu.registrarprestamo.request.RequestPrestamo.RequestPrestamoItem;
 import edu.pe.uls.con.libreria.cu.registrarprestamo.response.ResponsePrestamo;

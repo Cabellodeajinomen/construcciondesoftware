@@ -9,10 +9,10 @@ import java.util.regex.Pattern;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.pe.uls.con.libreria.RepositoryCliente;
+import edu.pe.uls.con.libreria.dominio.entity.EstadoEjemplar;
+import edu.pe.uls.con.libreria.dominio.repository.RepositoryCliente;
 import edu.pe.uls.con.libreria.cu.consultas.exception.ParametroInvalidoException;
 import edu.pe.uls.con.libreria.cu.consultas.exception.RecursoNoEncontradoException;
-import edu.pe.uls.con.libreria.dominio.entity.EstadoEjemplar;
 import edu.pe.uls.con.libreria.dominio.projection.ActividadCliente;
 import edu.pe.uls.con.libreria.dominio.projection.EjemplarPorEstado;
 import edu.pe.uls.con.libreria.dominio.projection.ItemDanado;

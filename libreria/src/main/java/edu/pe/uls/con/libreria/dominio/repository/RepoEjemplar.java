@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import edu.pe.uls.con.libreria.Ejemplar;
+import edu.pe.uls.con.libreria.dominio.entity.Ejemplar;
 
 public interface RepoEjemplar extends JpaRepository<Ejemplar, Integer> {
 

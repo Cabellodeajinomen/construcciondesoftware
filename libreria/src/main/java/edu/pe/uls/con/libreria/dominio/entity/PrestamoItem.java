@@ -2,7 +2,6 @@ package edu.pe.uls.con.libreria.dominio.entity;
 
 
 
-import edu.pe.uls.con.libreria.Ejemplar;
 import jakarta.persistence.*;
 
 @Entity

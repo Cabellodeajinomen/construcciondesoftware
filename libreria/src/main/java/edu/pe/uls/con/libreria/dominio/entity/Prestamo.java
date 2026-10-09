@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import edu.pe.uls.con.libreria.Cliente;
-import edu.pe.uls.con.libreria.Ejemplar;
 
 @Entity
 @Table(name = "prestamo")

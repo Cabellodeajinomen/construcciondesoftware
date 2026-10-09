@@ -1,5 +1,35 @@
 @host = https://reimagined-yodel-ppqp5wvvwqwc7r9q-8080.app.github.dev
 
+### Consultas por id: entidades del catálogo
+GET {{host}}/autor/1
+
+###
+GET {{host}}/categoria/1
+
+###
+GET {{host}}/cliente/1
+
+###
+GET {{host}}/editorial/1
+
+###
+GET {{host}}/libro/1
+
+### Consultas por id: préstamos y devoluciones
+GET {{host}}/ejemplar/1
+
+###
+GET {{host}}/prestamo/1
+
+###
+GET {{host}}/prestamo-item/1
+
+###
+GET {{host}}/devolucion/1
+
+###
+GET {{host}}/devolucion-item/1
+
 
 ### Q1  préstamos por DNI
 GET {{host}}/consultas/prestamos/cliente/45678912
