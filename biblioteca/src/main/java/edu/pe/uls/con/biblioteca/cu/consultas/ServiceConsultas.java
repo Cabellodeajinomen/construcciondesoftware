@@ -1,0 +1,138 @@
+package edu.pe.uls.con.biblioteca.cu.consultas;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.regex.Pattern;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import edu.pe.uls.con.biblioteca.dominio.repository.RepositoryCliente;
+import edu.pe.uls.con.biblioteca.cu.consultas.exception.ParametroInvalidoException;
+import edu.pe.uls.con.biblioteca.cu.consultas.exception.RecursoNoEncontradoException;
+import edu.pe.uls.con.biblioteca.dominio.projection.ActividadCliente;
+import edu.pe.uls.con.biblioteca.dominio.projection.EjemplarPorEstado;
+import edu.pe.uls.con.biblioteca.dominio.projection.ItemDanado;
+import edu.pe.uls.con.biblioteca.dominio.projection.ItemPendiente;
+import edu.pe.uls.con.biblioteca.dominio.projection.LibroPrestado;
+import edu.pe.uls.con.biblioteca.dominio.projection.MultaCliente;
+import edu.pe.uls.con.biblioteca.dominio.projection.PrestamoResumen;
+import edu.pe.uls.con.biblioteca.dominio.projection.PrestamoVencido;
+import edu.pe.uls.con.biblioteca.dominio.projection.PublicacionResumen;
+import edu.pe.uls.con.biblioteca.dominio.repository.RepoDevolucion;
+import edu.pe.uls.con.biblioteca.dominio.repository.RepoEjemplar;
+import edu.pe.uls.con.biblioteca.dominio.repository.RepoEstadoDisponibilidad;
+import edu.pe.uls.con.biblioteca.dominio.repository.RepoPrestamo;
+import edu.pe.uls.con.biblioteca.dominio.repository.RepoPrestamoItem;
+import edu.pe.uls.con.biblioteca.dominio.repository.RepoPublicacion;
+
+@Service
+@Transactional(readOnly = true)
+public class ServiceConsultas {
+
+    private static final Pattern DNI = Pattern.compile("\\d{8}");
+
+    RepositoryCliente repoCliente;
+    RepoPrestamo repoPrestamo;
+    RepoPrestamoItem repoPrestamoItem;
+    RepoDevolucion repoDevolucion;
+    RepoEjemplar repoEjemplar;
+    RepoEstadoDisponibilidad repoEstadoDisponibilidad;
+    RepoPublicacion repoPublicacion;
+
+    public ServiceConsultas(RepositoryCliente repoCliente, RepoPrestamo repoPrestamo,
+            RepoPrestamoItem repoPrestamoItem, RepoDevolucion repoDevolucion, RepoEjemplar repoEjemplar,
+            RepoEstadoDisponibilidad repoEstadoDisponibilidad, RepoPublicacion repoPublicacion) {
+        this.repoCliente = repoCliente;
+        this.repoPrestamo = repoPrestamo;
+        this.repoPrestamoItem = repoPrestamoItem;
+        this.repoDevolucion = repoDevolucion;
+        this.repoEjemplar = repoEjemplar;
+        this.repoEstadoDisponibilidad = repoEstadoDisponibilidad;
+        this.repoPublicacion = repoPublicacion;
+    }
+
+    // Query 1
+    public List<PrestamoResumen> consultarPrestamosPorDni(String dni) {
+        if (dni == null || !DNI.matcher(dni.trim()).matches()) {
+            throw new ParametroInvalidoException("El DNI debe tener exactamente 8 dígitos numéricos");
+        }
+        String dniLimpio = dni.trim();
+        repoCliente.findByDni(dniLimpio)
+            .orElseThrow(() -> new RecursoNoEncontradoException("No existe un cliente con DNI: " + dniLimpio));
+        return repoPrestamo.buscarPorDniCliente(dniLimpio);
+    }
+
+    // Query 2
+    public List<ItemPendiente> consultarItemsPendientesPorCliente(int idCliente) {
+        if (idCliente <= 0) {
+            throw new ParametroInvalidoException("El id del cliente debe ser un número positivo");
+        }
+        if (!repoCliente.existsById(idCliente)) {
+            throw new RecursoNoEncontradoException("No existe el cliente con id: " + idCliente);
+        }
+        return repoPrestamo.buscarItemsPendientesPorCliente(idCliente);
+    }
+
+    // Query 3: si no se envía fecha se usa la de hoy
+    public List<PrestamoVencido> consultarPrestamosVencidos(LocalDate fecha) {
+        LocalDate referencia = (fecha != null) ? fecha : LocalDate.now();
+        return repoPrestamo.buscarVencidosConItemsPendientes(referencia);
+    }
+
+    // Query 4
+    public List<LibroPrestado> consultarLibrosMasPrestados(long minimo) {
+        if (minimo < 1) {
+            throw new ParametroInvalidoException("El mínimo de préstamos debe ser mayor o igual a 1");
+        }
+        return repoPrestamoItem.buscarLibrosPrestadosAlMenos(minimo);
+    }
+
+    // Query 5
+    public List<MultaCliente> consultarMultasPorCliente() {
+        return repoDevolucion.obtenerTotalMultasPorCliente();
+    }
+
+    // Query 6
+    public List<ItemDanado> consultarItemsDanados() {
+        return repoDevolucion.buscarItemsDevueltosDanados();
+    }
+
+    // Query nativo 1: el estado de disponibilidad es numérico (1 Disponible, 2 Prestado, 3 Reservado, 4 No disponible)
+    public List<EjemplarPorEstado> consultarEjemplaresPorEstado(int idEstado) {
+        if (!repoEstadoDisponibilidad.existsById(idEstado)) {
+            throw new ParametroInvalidoException(
+                "Estado inválido: " + idEstado + ". Valores permitidos: 1 Disponible, 2 Prestado, 3 Reservado, 4 No disponible");
+        }
+        return repoEjemplar.buscarEjemplaresPorEstado(idEstado).stream()
+            .map(f -> new EjemplarPorEstado((String) f[0], (String) f[1], (String) f[2]))
+            .toList();
+    }
+
+    // Query nativo 2
+    public List<ActividadCliente> consultarActividadPorCliente() {
+        return repoPrestamo.obtenerActividadPorCliente().stream()
+            .map(f -> new ActividadCliente(
+                ((Number) f[0]).intValue(),
+                (String) f[1],
+                ((Number) f[2]).longValue(),
+                ((Number) f[3]).longValue()))
+            .toList();
+    }
+
+    // Publicaciones de un año exacto
+    public List<PublicacionResumen> consultarPublicacionesPorAño(int año) {
+        return consultarPublicacionesEntreAños(año, año);
+    }
+
+    // Publicaciones entre dos años (ambos incluidos)
+    public List<PublicacionResumen> consultarPublicacionesEntreAños(int desde, int hasta) {
+        if (desde <= 0 || hasta <= 0) {
+            throw new ParametroInvalidoException("El año debe ser un número positivo");
+        }
+        if (desde > hasta) {
+            throw new ParametroInvalidoException("El año 'desde' no puede ser mayor que el año 'hasta'");
+        }
+        return repoPublicacion.buscarPorRangoDeAños(desde, hasta);
+    }
+}

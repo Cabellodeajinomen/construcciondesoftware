@@ -1,0 +1,196 @@
+@host = https://ubiquitous-engine-jjjj4vwj9p4xcgqx-8080.app.github.dev
+### ==================================================
+### CONSULTAS POR ID: CATÁLOGO
+### ==================================================
+
+### 1. Autor existente
+GET {{host}}/autor/1001
+
+### 1.1 Autor inexistente (404)
+GET {{host}}/autor/99999
+
+### 2. Editorial existente
+GET {{host}}/editorial/1001
+
+### 2.1 Editorial inexistente (404)
+GET {{host}}/editorial/99999
+
+### 3. Categoria existente
+GET {{host}}/categoria/1003
+
+### 3.1 Categoria inexistente (404)
+GET {{host}}/categoria/99999
+
+### 4. Libro existente (muestra autor, editorial y categoria)
+GET {{host}}/libro/1004
+
+### 4.1 Libro inexistente (404)
+GET {{host}}/libro/99999
+
+### 5. Cliente existente
+GET {{host}}/cliente/1001
+
+### 5.1 Cliente inexistente (404)
+GET {{host}}/cliente/99999
+
+### ========================================
+### CONSULTAS POR ID: PRESTAMOS Y DEVOLUCIONES
+### ========================================
+
+### 1. CONSULTAR EJEMPLAR EXISTENTE
+GET {{host}}/ejemplar/1002
+
+### 1.1 CONSULTAR EJEMPLAR INEXISTENTE
+GET {{host}}/ejemplar/99999
+
+
+### 2. CONSULTAR PRESTAMO EXISTENTE
+GET {{host}}/prestamo/1002
+
+### 2.1 CONSULTAR PRESTAMO INEXISTENTE
+GET {{host}}/prestamo/99999
+
+
+### 3. CONSULTAR PRESTAMO ITEM EXISTENTE
+GET {{host}}/prestamo-item/1003
+
+### 3.1 CONSULTAR PRESTAMO ITEM INEXISTENTE
+GET {{host}}/prestamo-item/99999
+
+
+### 4. CONSULTAR DEVOLUCION EXISTENTE
+GET {{host}}/devolucion/1001
+
+### 4.1 CONSULTAR DEVOLUCION INEXISTENTE
+GET {{host}}/devolucion/99999
+
+
+### 5. CONSULTAR DEVOLUCION ITEM EXISTENTE
+GET {{host}}/devolucion-item/1001
+
+### 5.1 CONSULTAR DEVOLUCION ITEM INEXISTENTE
+GET {{host}}/devolucion-item/99999
+
+### ==================================================
+### CONSULTAS POR ID: MODELO BIBLIOTECA (VERSIÓN 2)
+### ==================================================
+
+GET {{host}}/tipo-publicacion/1
+
+###
+GET {{host}}/idioma/1001
+
+###
+GET {{host}}/publicacion/1004
+
+###
+GET {{host}}/revista/1007
+
+###
+GET {{host}}/tesis/1009
+
+###
+GET {{host}}/tipo-cliente/1002
+
+###
+GET {{host}}/ubicacion/1003
+
+###
+GET {{host}}/estado-fisico/3
+
+###
+GET {{host}}/estado-disponibilidad/2
+
+###
+GET {{host}}/reserva/1001
+
+###
+GET {{host}}/parametro/1003
+
+### ==================================================
+### OTRAS CONSULTAS
+### ==================================================
+
+### Q1 Préstamos por DNI
+GET {{host}}/consultas/prestamos/cliente/70000001
+
+### Q1.1 DNI inválido (400)
+GET {{host}}/consultas/prestamos/cliente/123
+
+### Q1.2 DNI inexistente (404)
+GET {{host}}/consultas/prestamos/cliente/99999999
+
+### Q2 Préstamos pendientes de un cliente
+GET {{host}}/consultas/prestamos/pendientes/cliente/1002
+
+### Q2.1 Id negativo (400)
+GET {{host}}/consultas/prestamos/pendientes/cliente/-5
+
+### Q2.2 Id no numérico (400)
+GET {{host}}/consultas/prestamos/pendientes/cliente/abc
+
+### Q3 Préstamos vencidos a hoy
+GET {{host}}/consultas/prestamos/vencidos
+
+### Q3.1 Préstamos vencidos a una fecha
+GET {{host}}/consultas/prestamos/vencidos?fecha=2026-12-31
+
+### Q3.2 Fecha inválida (400)
+GET {{host}}/consultas/prestamos/vencidos?fecha=ayer
+
+### Q4 Libros prestados al menos N veces
+GET {{host}}/consultas/libros/mas-prestados?minimo=1
+
+### Q4.1 Mínimo inválido (400)
+GET {{host}}/consultas/libros/mas-prestados?minimo=0
+
+### Q5 (JPQL) Multas por cliente
+GET {{host}}/consultas/devoluciones/multas-por-cliente
+
+### Q6 (JPQL) Ítems devueltos con daño
+GET {{host}}/consultas/devoluciones/items-danados
+
+### N1 (nativo) Ejemplares por estado
+GET {{host}}/consultas/ejemplares/estado/1
+
+### N1.1 Estado inválido (400)
+GET {{host}}/consultas/ejemplares/estado/9
+
+### N2 (nativo) Actividad por cliente
+GET {{host}}/consultas/clientes/actividad
+
+### ==================================================
+### PUBLICACIONES POR AÑO
+### ==================================================
+
+### A1 Publicaciones de un año exacto
+GET {{host}}/consultas/publicaciones/año/1967
+
+### A2 Publicaciones entre dos años
+GET {{host}}/consultas/publicaciones/año?desde=2000&hasta=2025
+
+### A3 Rango inválido (400)
+GET {{host}}/consultas/publicaciones/año?desde=2025&hasta=2000
+
+
+
+### A. Ejemplar 1001 antes (estadoDisponibilidad: Disponible)
+GET {{host}}/ejemplar/1001
+
+### B. Registrar préstamo
+POST {{host}}/prestamo/nuevo
+Content-Type: application/json
+
+{ "idCliente": 1005, "items": [ { "idEjemplar": 1001 }, { "idEjemplar": 1004 } ] }
+
+### C. Ejemplar 1001 después (ahora: Prestado)
+GET {{host}}/ejemplar/1001
+
+### D. Registrar devolución del ejemplar 1007 (préstamo vencido 1002)
+POST {{host}}/devolucion/nuevo
+Content-Type: application/json
+
+{ "idPrestamo": 1002, "items": [ { "idEjemplar": 1007, "danado": false } ] }
+
+### E. Ejemplar 1007 después (ahora: Disponible)
+GET {{host}}/ejemplar/1007
