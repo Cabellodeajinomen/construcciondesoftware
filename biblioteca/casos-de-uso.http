@@ -1,0 +1,98 @@
+@host = https://obscure-space-meme-v6rqg75xq4w3wxrx-8080.app.github.dev/
+
+### ===== CU1 Registrar préstamo =====
+
+### 1. Identificar al cliente por DNI (OK)
+GET {{host}}/prestamo/cliente/70000005
+
+### 1. Cliente con préstamos vencidos (puedePrestar = false)
+GET {{host}}/prestamo/cliente/70000002
+
+### 1. DNI que no existe (404)
+GET {{host}}/prestamo/cliente/99999999
+
+### 2. Ejemplares disponibles de una publicación (OK)
+GET {{host}}/prestamo/ejemplares-disponibles/1001
+
+### 2. Publicación que no existe (404)
+GET {{host}}/prestamo/ejemplares-disponibles/99999
+
+### 3. Registrar préstamo con 2 ejemplares (201)
+POST {{host}}/prestamo/nuevo
+Content-Type: application/json
+
+{ "idCliente": 1005, "items": [ { "idEjemplar": 1004 }, { "idEjemplar": 1006 } ] }
+
+### 3. Cliente con préstamos vencidos (409)
+POST {{host}}/prestamo/nuevo
+Content-Type: application/json
+
+{ "idCliente": 1002, "items": [ { "idEjemplar": 1012 } ] }
+
+### 3. Ejemplar reservado (409)
+POST {{host}}/prestamo/nuevo
+Content-Type: application/json
+
+{ "idCliente": 1001, "items": [ { "idEjemplar": 1008 } ] }
+
+### 3. Más de 3 ejemplares (409)
+POST {{host}}/prestamo/nuevo
+Content-Type: application/json
+
+{ "idCliente": 1004, "items": [ { "idEjemplar": 1011 }, { "idEjemplar": 1012 }, { "idEjemplar": 1013 }, { "idEjemplar": 1002 } ] }
+
+### 3. Sin ejemplares (400)
+POST {{host}}/prestamo/nuevo
+Content-Type: application/json
+
+{ "idCliente": 1005, "items": [] }
+
+### 4. Ver el préstamo registrado (OK)
+GET {{host}}/prestamo/1002
+
+### 4. Préstamo que no existe (404)
+GET {{host}}/prestamo/99999
+
+### ===== CU2 Registrar devolución =====
+
+### 1. Ejemplares que faltan devolver con su multa (OK)
+GET {{host}}/devolucion/prestamo/1002/pendientes
+
+### 1. Préstamo que no existe (404)
+GET {{host}}/devolucion/prestamo/99999/pendientes
+
+### 2. Devolver con retraso (201, cobra multa)
+POST {{host}}/devolucion/nuevo
+Content-Type: application/json
+
+{ "idPrestamo": 1002, "items": [ { "idEjemplar": 1007, "danado": false } ] }
+
+### 2. Devolver un ejemplar dañado (201, queda no disponible)
+POST {{host}}/devolucion/nuevo
+Content-Type: application/json
+
+{ "idPrestamo": 1003, "items": [ { "idEjemplar": 1010, "danado": true } ] }
+
+### 2. Ejemplar ya devuelto (409)
+POST {{host}}/devolucion/nuevo
+Content-Type: application/json
+
+{ "idPrestamo": 1001, "items": [ { "idEjemplar": 1003, "danado": false } ] }
+
+### 2. Ejemplar que no es del préstamo (404)
+POST {{host}}/devolucion/nuevo
+Content-Type: application/json
+
+{ "idPrestamo": 1002, "items": [ { "idEjemplar": 1001, "danado": false } ] }
+
+### 3. Historial de devoluciones del préstamo (OK)
+GET {{host}}/devolucion/prestamo/1001
+
+### 3. Préstamo que no existe (404)
+GET {{host}}/devolucion/prestamo/99999
+
+### 4. Ver una devolución (OK)
+GET {{host}}/devolucion/1001
+
+### 4. Devolución que no existe (404)
+GET {{host}}/devolucion/99999

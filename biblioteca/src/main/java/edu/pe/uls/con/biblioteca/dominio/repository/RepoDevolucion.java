@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import edu.pe.uls.con.biblioteca.dominio.entity.Devolucion;
+import edu.pe.uls.con.biblioteca.dominio.projection.DevolucionResumen;
 import edu.pe.uls.con.biblioteca.dominio.projection.ItemDanado;
 import edu.pe.uls.con.biblioteca.dominio.projection.MultaCliente;
 
@@ -37,4 +39,17 @@ public interface RepoDevolucion extends JpaRepository<Devolucion, Integer> {
         ORDER BY d.fechaDevolucion DESC
     """)
     List<ItemDanado> buscarItemsDevueltosDanados();
+
+    // CU Registrar devolución: Devolucion + Prestamo + DevolucionItem, historial de un préstamo
+    @Query("""
+        SELECT new edu.pe.uls.con.biblioteca.dominio.projection.DevolucionResumen(
+            d.id, d.fechaDevolucion, d.totalMulta, COUNT(di))
+        FROM Devolucion d
+        JOIN d.prestamo p
+        JOIN d.items di
+        WHERE p.id = :idPrestamo
+        GROUP BY d.id, d.fechaDevolucion, d.totalMulta
+        ORDER BY d.fechaDevolucion
+    """)
+    List<DevolucionResumen> buscarResumenPorPrestamo(@Param("idPrestamo") int idPrestamo);
 }

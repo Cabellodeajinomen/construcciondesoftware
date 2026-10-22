@@ -121,18 +121,18 @@ public class ServiceConsultas {
     }
 
     // Publicaciones de un año exacto
-    public List<PublicacionResumen> consultarPublicacionesPorAño(int año) {
-        return consultarPublicacionesEntreAños(año, año);
+    public List<PublicacionResumen> consultarPublicacionesPorAnio(int anio) {
+        return consultarPublicacionesEntreAnios(anio, anio);
     }
 
     // Publicaciones entre dos años (ambos incluidos)
-    public List<PublicacionResumen> consultarPublicacionesEntreAños(int desde, int hasta) {
+    public List<PublicacionResumen> consultarPublicacionesEntreAnios(int desde, int hasta) {
         if (desde <= 0 || hasta <= 0) {
             throw new ParametroInvalidoException("El año debe ser un número positivo");
         }
         if (desde > hasta) {
             throw new ParametroInvalidoException("El año 'desde' no puede ser mayor que el año 'hasta'");
         }
-        return repoPublicacion.buscarPorRangoDeAños(desde, hasta);
+        return repoPublicacion.buscarPorRangoDeAnios(desde, hasta);
     }
 }

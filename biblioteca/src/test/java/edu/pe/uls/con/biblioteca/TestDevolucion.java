@@ -27,7 +27,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 /**
- * registro cabecera-detalle Devolucion + DevolucionItem.
+ * Consigna B (2): registro cabecera-detalle Devolucion + DevolucionItem.
+ * Usa el préstamo 1002 de data.sql, que tiene el ejemplar 1007 pendiente y venció el 2026-10-08.
  */
 @SpringBootTest
 @AutoConfigureMockMvc

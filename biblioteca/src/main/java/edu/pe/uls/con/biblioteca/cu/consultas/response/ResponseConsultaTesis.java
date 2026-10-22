@@ -5,7 +5,7 @@ import java.util.List;
 public record ResponseConsultaTesis(
         int id,
         String titulo,
-        int añoPublicacion,
+        int anioPublicacion,
         String gradoAcademico,
         String institucion,
         String asesor,

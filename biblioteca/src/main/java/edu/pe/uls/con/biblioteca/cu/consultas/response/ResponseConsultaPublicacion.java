@@ -5,7 +5,7 @@ import java.util.List;
 public record ResponseConsultaPublicacion(
         int id,
         String titulo,
-        int añoPublicacion,
+        int anioPublicacion,
         String descripcion,
         String tipoPublicacion,
         String idioma,

@@ -35,7 +35,7 @@ INSERT INTO idioma (id, codigo, nombre) VALUES
  (1004, 'qu', 'Quechua')
 ON CONFLICT DO NOTHING;
 
-INSERT INTO editorial (id, nombre, pais_origen, año_fundacion) VALUES
+INSERT INTO editorial (id, nombre, pais_origen, anio_fundacion) VALUES
  (1001, 'Alfaguara', 'España', 1964),
  (1002, 'Planeta', 'España', 1949),
  (1003, 'Pearson', 'Reino Unido', 1844),
@@ -87,7 +87,7 @@ INSERT INTO parametro (id, codigo, valor, tipo_dato, descripcion) VALUES
 ON CONFLICT DO NOTHING;
 
 -- ---------- Publicaciones (tabla padre) ----------
-INSERT INTO publicacion (id, titulo, año_publicacion, descripcion, id_tipo_publicacion, id_idioma, id_editorial) VALUES
+INSERT INTO publicacion (id, titulo, anio_publicacion, descripcion, id_tipo_publicacion, id_idioma, id_editorial) VALUES
  (1001, 'La ciudad y los perros', 1963, 'Novela ambientada en el Colegio Militar Leoncio Prado', 1, 1001, 1001),
  (1002, 'Cien años de soledad', 1967, 'Historia de la familia Buendía en Macondo', 1, 1001, 1001),
  (1003, 'Los heraldos negros', 1918, 'Primer poemario de César Vallejo', 1, 1001, 1002),

@@ -23,8 +23,8 @@ public abstract class Publicacion {
     @Column(nullable = false)
     private String titulo;
 
-    @Column(name = "año_publicacion")
-    private int añoPublicacion;
+    @Column(name = "anio_publicacion")
+    private int anioPublicacion;
 
     @Column(length = 500)
     private String descripcion;
@@ -72,11 +72,11 @@ public abstract class Publicacion {
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-    public int getAñoPublicacion() {
-        return añoPublicacion;
+    public int getAnioPublicacion() {
+        return anioPublicacion;
     }
-    public void setAñoPublicacion(int añoPublicacion) {
-        this.añoPublicacion = añoPublicacion;
+    public void setAnioPublicacion(int anioPublicacion) {
+        this.anioPublicacion = anioPublicacion;
     }
     public String getDescripcion() {
         return descripcion;

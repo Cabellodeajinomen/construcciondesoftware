@@ -1,4 +1,4 @@
-@host = https://ubiquitous-engine-jjjj4vwj9p4xcgqx-8080.app.github.dev
+@host = https://obscure-space-meme-v6rqg75xq4w3wxrx-8080.app.github.dev/
 ### ==================================================
 ### CONSULTAS POR ID: CATÁLOGO
 ### ==================================================
@@ -164,33 +164,10 @@ GET {{host}}/consultas/clientes/actividad
 ### ==================================================
 
 ### A1 Publicaciones de un año exacto
-GET {{host}}/consultas/publicaciones/año/1967
+GET {{host}}/consultas/publicaciones/anio/1967
 
 ### A2 Publicaciones entre dos años
-GET {{host}}/consultas/publicaciones/año?desde=2000&hasta=2025
+GET {{host}}/consultas/publicaciones/anio?desde=2000&hasta=2025
 
 ### A3 Rango inválido (400)
-GET {{host}}/consultas/publicaciones/año?desde=2025&hasta=2000
-
-
-
-### A. Ejemplar 1001 antes (estadoDisponibilidad: Disponible)
-GET {{host}}/ejemplar/1001
-
-### B. Registrar préstamo
-POST {{host}}/prestamo/nuevo
-Content-Type: application/json
-
-{ "idCliente": 1005, "items": [ { "idEjemplar": 1001 }, { "idEjemplar": 1004 } ] }
-
-### C. Ejemplar 1001 después (ahora: Prestado)
-GET {{host}}/ejemplar/1001
-
-### D. Registrar devolución del ejemplar 1007 (préstamo vencido 1002)
-POST {{host}}/devolucion/nuevo
-Content-Type: application/json
-
-{ "idPrestamo": 1002, "items": [ { "idEjemplar": 1007, "danado": false } ] }
-
-### E. Ejemplar 1007 después (ahora: Disponible)
-GET {{host}}/ejemplar/1007
+GET {{host}}/consultas/publicaciones/anio?desde=2025&hasta=2000

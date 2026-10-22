@@ -13,7 +13,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * consulta por ID de cada entity del modelo de datos.
+ * Consigna A: consulta por ID de cada entity del modelo de datos.
+ * Los datos esperados son los que carga data.sql en la base H2 de pruebas.
  */
 @SpringBootTest
 @AutoConfigureMockMvc

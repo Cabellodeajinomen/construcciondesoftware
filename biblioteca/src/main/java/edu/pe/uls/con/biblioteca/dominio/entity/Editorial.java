@@ -17,7 +17,7 @@ public class Editorial {
     @Column(unique = true, nullable = false)
     private String nombre;
     private String paisOrigen;
-    private int añoFundacion;
+    private int anioFundacion;
 
     public int getId() {
         return id;
@@ -37,10 +37,10 @@ public class Editorial {
     public void setPaisOrigen(String paisOrigen) {
         this.paisOrigen = paisOrigen;
     }
-    public int getAñoFundacion() {
-        return añoFundacion;
+    public int getAnioFundacion() {
+        return anioFundacion;
     }
-    public void setAñoFundacion(int añoFundacion) {
-        this.añoFundacion = añoFundacion;
+    public void setAnioFundacion(int anioFundacion) {
+        this.anioFundacion = anioFundacion;
     }
 }

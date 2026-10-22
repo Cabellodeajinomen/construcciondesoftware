@@ -26,7 +26,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * registro cabecera-detalle Prestamo + PrestamoItem.
+ * Consigna B (1): registro cabecera-detalle Prestamo + PrestamoItem.
  */
 @SpringBootTest
 @AutoConfigureMockMvc

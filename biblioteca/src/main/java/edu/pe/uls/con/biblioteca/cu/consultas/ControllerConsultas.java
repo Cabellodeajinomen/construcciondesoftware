@@ -80,16 +80,16 @@ public class ControllerConsultas {
         return serviceConsultas.consultarActividadPorCliente();
     }
 
-    // Publicaciones de un año: /consultas/publicaciones/año/1967
-    @GetMapping("/publicaciones/año/{año}")
-    public List<PublicacionResumen> publicacionesPorAño(@PathVariable("año") int año) {
-        return serviceConsultas.consultarPublicacionesPorAño(año);
+    // Publicaciones de un año: /consultas/publicaciones/anio/1967
+    @GetMapping("/publicaciones/anio/{anio}")
+    public List<PublicacionResumen> publicacionesPorAnio(@PathVariable("anio") int anio) {
+        return serviceConsultas.consultarPublicacionesPorAnio(anio);
     }
 
-    // Publicaciones entre dos años: /consultas/publicaciones/año?desde=2000&hasta=2010
-    @GetMapping("/publicaciones/año")
-    public List<PublicacionResumen> publicacionesEntreAños(@RequestParam("desde") int desde,
+    // Publicaciones entre dos años: /consultas/publicaciones/anio?desde=2000&hasta=2010
+    @GetMapping("/publicaciones/anio")
+    public List<PublicacionResumen> publicacionesEntreAnios(@RequestParam("desde") int desde,
             @RequestParam("hasta") int hasta) {
-        return serviceConsultas.consultarPublicacionesEntreAños(desde, hasta);
+        return serviceConsultas.consultarPublicacionesEntreAnios(desde, hasta);
     }
 }

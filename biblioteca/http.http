@@ -1,6 +1,4 @@
-@host = https://ubiquitous-engine-jjjj4vwj9p4xcgqx-8080.app.github.dev
-
-@host = http://localhost:8080
+@host = https://obscure-space-meme-v6rqg75xq4w3wxrx-8080.app.github.dev/
 
 ### 1. Crear cliente
 POST {{host}}/cliente/nuevo
@@ -18,7 +16,7 @@ Content-Type: application/json
 POST {{host}}/editorial/nuevo
 Content-Type: application/json
 
-{ "nombre": "Sudamericana", "paisOrigen": "Argentina", "añoFundacion": 1939 }
+{ "nombre": "Sudamericana", "paisOrigen": "Argentina", "anioFundacion": 1939 }
 
 ### 4. Crear categoría
 POST {{host}}/categoria/nuevo
@@ -30,7 +28,7 @@ Content-Type: application/json
 POST {{host}}/libro/nuevo
 Content-Type: application/json
 
-{ "titulo": "Cien años de soledad", "añoPublicacion": 1967, "descripcion": "Novela", "isbn": "978-84-233-5000-1", "edicion": "1ra", "numeroPaginas": 471, "idIdioma": 1001, "idEditorial": 1, "idAutores": [1], "idCategorias": [1, 1001] }
+{ "titulo": "Cien años de soledad", "anioPublicacion": 1967, "descripcion": "Novela", "isbn": "978-84-233-5000-1", "edicion": "1ra", "numeroPaginas": 471, "idIdioma": 1001, "idEditorial": 1, "idAutores": [1], "idCategorias": [1, 1001] }
 
 ### 6. Crear ejemplar (idPublicacion = id del libro del paso 5, idUbicacion = stand)
 POST {{host}}/ejemplar/nuevo
@@ -48,13 +46,13 @@ Content-Type: application/json
 POST {{host}}/devolucion/nuevo
 Content-Type: application/json
 
-{ "idPrestamo": 1002, "items": [ { "idEjemplar": 1007, "danado": false } ] }
+{ "idPrestamo": 1, "items": [ { "idEjemplar": 1, "danado": false } ] }
 
 ### 9. Error: libro con autor que no existe (404)
 POST {{host}}/libro/nuevo
 Content-Type: application/json
 
-{ "titulo": "Libro sin autor", "añoPublicacion": 2020, "isbn": "978-0-000-00000-0", "numeroPaginas": 100, "idIdioma": 1001, "idEditorial": 1, "idAutores": [999], "idCategorias": [1001] }
+{ "titulo": "Libro sin autor", "anioPublicacion": 2020, "isbn": "978-0-000-00000-0", "numeroPaginas": 100, "idIdioma": 1001, "idEditorial": 1, "idAutores": [999], "idCategorias": [1001] }
 
 ### 10. Error: cliente que no existe (404)
 POST {{host}}/prestamo/nuevo

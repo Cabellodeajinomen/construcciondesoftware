@@ -66,4 +66,25 @@ public interface RepoPrestamo extends JpaRepository<Prestamo, Integer> {
         ORDER BY total_libros DESC, c.nombre_completo
     """, nativeQuery = true)
     List<Object[]> obtenerActividadPorCliente();
+
+    // CU Registrar préstamo: Prestamo + PrestamoItem, ejemplares que el cliente aún no devuelve
+    @Query("""
+        SELECT COUNT(i)
+        FROM Prestamo p
+        JOIN p.items i
+        WHERE p.cliente.id = :idCliente
+          AND i.devuelto = false
+    """)
+    long contarItemsPendientes(@Param("idCliente") int idCliente);
+
+    // CU Registrar préstamo: Prestamo + PrestamoItem, pendientes cuya fecha límite ya pasó
+    @Query("""
+        SELECT COUNT(i)
+        FROM Prestamo p
+        JOIN p.items i
+        WHERE p.cliente.id = :idCliente
+          AND i.devuelto = false
+          AND p.fechaLimite < :hoy
+    """)
+    long contarItemsVencidos(@Param("idCliente") int idCliente, @Param("hoy") LocalDate hoy);
 }

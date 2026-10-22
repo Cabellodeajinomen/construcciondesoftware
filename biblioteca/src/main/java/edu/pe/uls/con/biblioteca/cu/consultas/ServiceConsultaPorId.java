@@ -168,7 +168,7 @@ public class ServiceConsultaPorId {
 
     public ResponseConsultaPublicacion consultarPublicacion(int id) {
         Publicacion p = repoPublicacion.findById(id).orElseThrow(() -> noEncontrado("Publicación", id));
-        return new ResponseConsultaPublicacion(p.getId(), p.getTitulo(), p.getAñoPublicacion(),
+        return new ResponseConsultaPublicacion(p.getId(), p.getTitulo(), p.getAnioPublicacion(),
                 p.getDescripcion(), p.getTipoPublicacion().getNombre(), p.getIdioma().getNombre(),
                 p.getEditorial() == null ? null : p.getEditorial().getNombre(),
                 nombresAutores(p.getAutores()), nombresCategorias(p.getCategorias()));
@@ -183,7 +183,7 @@ public class ServiceConsultaPorId {
 
     public ResponseConsultaTesis consultarTesis(int id) {
         Tesis t = repoTesis.findById(id).orElseThrow(() -> noEncontrado("Tesis", id));
-        return new ResponseConsultaTesis(t.getId(), t.getTitulo(), t.getAñoPublicacion(),
+        return new ResponseConsultaTesis(t.getId(), t.getTitulo(), t.getAnioPublicacion(),
                 t.getGradoAcademico(), t.getInstitucion(), t.getAsesor(), nombresAutores(t.getAutores()));
     }
 
