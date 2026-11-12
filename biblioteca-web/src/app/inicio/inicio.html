@@ -1,39 +1,10 @@
-<section class="portada">
-  <div class="portada-texto">
-    <p class="etiqueta">Sistema de Biblioteca</p>
-    <h1>Clientes, libros y préstamos, cada uno en su ficha.</h1>
-    <p class="bajada">Registre los datos de la biblioteca con validación en cada campo y sin salir de una sola pantalla.</p>
-    <div class="acciones">
-      <a class="btn btn-primario" routerLink="/prestamo/nuevo">Registrar un préstamo</a>
-      <a class="btn btn-secundario" routerLink="/libro/nuevo">Agregar un libro</a>
-    </div>
-  </div>
-
-  <div class="ficha-deco" aria-hidden="true">
-    <div class="ficha-hoja">
-      <span class="ficha-titulo"></span>
-      <span class="ficha-linea"></span>
-      <span class="ficha-linea corta"></span>
-      <span class="ficha-linea"></span>
-      <span class="ficha-linea media"></span>
-    </div>
-  </div>
+<section class="hero">
+  <h1>Biblioteca ULS</h1>
+  <p>Elija qué desea registrar.</p>
 </section>
 
-<section aria-labelledby="titulo-indice">
-  <h2 id="titulo-indice" class="titulo-indice">Fichas disponibles</h2>
-  <ol class="indice">
-    @for (f of formularios; track f.ruta; let i = $index) {
-      <li>
-        <a [routerLink]="f.ruta">
-          <span class="numero">{{ i + 1 }}</span>
-          <span class="detalle">
-            <strong>{{ f.titulo }}</strong>
-            <span>{{ f.texto }}</span>
-          </span>
-          <span class="flecha" aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    }
-  </ol>
-</section>
+<ul class="opciones">
+  @for (f of formularios; track f.ruta) {
+    <li><a [routerLink]="f.ruta">{{ f.titulo }}</a></li>
+  }
+</ul>
