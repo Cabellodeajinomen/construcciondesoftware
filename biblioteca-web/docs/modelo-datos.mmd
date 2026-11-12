@@ -1,0 +1,171 @@
+erDiagram
+    TIPO_CLIENTE ||--o{ CLIENTE : clasifica
+    CLIENTE ||--o{ PRESTAMO : solicita
+    CLIENTE ||--o{ RESERVA : realiza
+    PRESTAMO ||--|{ PRESTAMO_ITEM : detalla
+    EJEMPLAR ||--o{ PRESTAMO_ITEM : se_presta_en
+    PRESTAMO ||--o{ DEVOLUCION : registra
+    DEVOLUCION ||--|{ DEVOLUCION_ITEM : detalla
+    PRESTAMO_ITEM ||--o| DEVOLUCION_ITEM : se_devuelve_en
+    PUBLICACION ||--o{ EJEMPLAR : tiene
+    PUBLICACION ||--o{ RESERVA : es_reservada
+    EJEMPLAR |o--o{ RESERVA : se_asigna
+    UBICACION ||--o{ EJEMPLAR : aloja
+    ESTADO_FISICO ||--o{ EJEMPLAR : describe
+    ESTADO_DISPONIBILIDAD ||--o{ EJEMPLAR : indica
+    TIPO_PUBLICACION ||--o{ PUBLICACION : clasifica
+    IDIOMA ||--o{ PUBLICACION : en
+    EDITORIAL |o--o{ PUBLICACION : publica
+    PUBLICACION ||--o{ PUBLICACION_AUTOR : tiene
+    AUTOR ||--o{ PUBLICACION_AUTOR : escribe
+    PUBLICACION ||--o{ PUBLICACION_CATEGORIA : tiene
+    CATEGORIA ||--o{ PUBLICACION_CATEGORIA : agrupa
+    PUBLICACION ||--o| LIBRO : especializa
+    PUBLICACION ||--o| REVISTA : especializa
+    PUBLICACION ||--o| TESIS : especializa
+
+    CLIENTE {
+        int id PK
+        string nombre_completo
+        string dni UK
+        string email UK
+        int id_tipo_cliente FK
+    }
+    TIPO_CLIENTE {
+        int id PK
+        string nombre UK
+        string descripcion
+    }
+    PUBLICACION {
+        int id PK
+        string titulo
+        int anio_publicacion
+        string descripcion
+        int id_tipo_publicacion FK
+        int id_idioma FK
+        int id_editorial FK
+    }
+    LIBRO {
+        int id_publicacion PK, FK
+        string isbn UK
+        string edicion
+        int numero_paginas
+    }
+    REVISTA {
+        int id_publicacion PK, FK
+        string issn
+        string volumen
+        string numero
+        date fecha_publicacion
+    }
+    TESIS {
+        int id_publicacion PK, FK
+        string grado_academico
+        string institucion
+        string asesor
+    }
+    EJEMPLAR {
+        int id PK
+        int id_publicacion FK
+        string codigo_barras UK
+        int id_ubicacion FK
+        int id_estado_fisico FK
+        int id_estado_disponibilidad FK
+        string nota
+    }
+    PRESTAMO {
+        int id PK
+        int id_cliente FK
+        datetime fecha_prestamo
+        date fecha_limite
+    }
+    PRESTAMO_ITEM {
+        int id PK
+        int id_prestamo FK
+        int id_ejemplar FK
+        boolean devuelto
+    }
+    DEVOLUCION {
+        int id PK
+        int id_prestamo FK
+        datetime fecha_devolucion
+        double total_multa
+    }
+    DEVOLUCION_ITEM {
+        int id PK
+        int id_devolucion FK
+        int id_prestamo_item FK
+        boolean danado
+        int dias_retraso
+        double multa
+    }
+    RESERVA {
+        int id PK
+        int id_cliente FK
+        int id_publicacion FK
+        int id_ejemplar FK
+        datetime fecha_reserva
+        datetime fecha_vencimiento
+        int estado
+        datetime fecha_atencion
+    }
+    AUTOR {
+        int id PK
+        string nombres
+        string apellidos
+        string nacionalidad
+    }
+    EDITORIAL {
+        int id PK
+        string nombre UK
+        string pais_origen
+        int anio_fundacion
+    }
+    CATEGORIA {
+        int id PK
+        string nombre UK
+        string descripcion
+    }
+    IDIOMA {
+        int id PK
+        string codigo UK
+        string nombre
+    }
+    UBICACION {
+        int id PK
+        string codigo UK
+        string sala
+        string estante
+        string nivel
+        string seccion
+    }
+    ESTADO_FISICO {
+        int id PK
+        string nombre UK
+        string descripcion
+    }
+    ESTADO_DISPONIBILIDAD {
+        int id PK
+        string nombre UK
+        string descripcion
+    }
+    TIPO_PUBLICACION {
+        int id PK
+        string nombre UK
+        string descripcion
+    }
+    PUBLICACION_AUTOR {
+        int id_publicacion PK, FK
+        int id_autor PK, FK
+    }
+    PUBLICACION_CATEGORIA {
+        int id_publicacion PK, FK
+        int id_categoria PK, FK
+    }
+    PARAMETRO {
+        int id PK
+        string codigo UK
+        string valor
+        string tipo_dato
+        string descripcion
+    }

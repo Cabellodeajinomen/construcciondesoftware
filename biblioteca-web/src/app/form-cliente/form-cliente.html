@@ -1,0 +1,70 @@
+<section class="tarjeta">
+  <h1>Registrar cliente</h1>
+  <p class="subtitulo">Todos los campos son obligatorios.</p>
+
+  <form #miForm="ngForm" (ngSubmit)="onSubmit(miForm)" novalidate>
+    <div class="campo">
+      <label for="nombreCompleto">Nombre completo</label>
+      <input type="text" id="nombreCompleto" name="nombreCompleto" ngModel required minlength="5" maxlength="100"
+        pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ' .\-]*$" autocomplete="name"
+        placeholder="Ej. Lucía Fernández Paredes" #nombreCompleto="ngModel">
+      <app-errores-campo [control]="nombreCompleto" [mensajes]="{
+        required: 'El nombre completo es obligatorio',
+        minlength: 'Ingrese al menos 5 caracteres',
+        maxlength: 'Máximo 100 caracteres',
+        pattern: 'Solo se permiten letras, espacios, punto, apóstrofo y guion'
+      }" />
+    </div>
+
+    <div class="grid-2">
+      <div class="campo">
+        <label for="dni">DNI</label>
+        <input type="text" id="dni" name="dni" ngModel required pattern="^[0-9]{8}$" maxlength="8"
+          inputmode="numeric" autocomplete="off" placeholder="8 dígitos" #dni="ngModel">
+        <app-errores-campo [control]="dni" [mensajes]="{
+          required: 'El DNI es obligatorio',
+          pattern: 'El DNI debe tener exactamente 8 dígitos numéricos'
+        }" />
+      </div>
+
+      <div class="campo">
+        <label for="idTipoCliente">Tipo de cliente</label>
+        <select id="idTipoCliente" name="idTipoCliente" [ngModel]="null" required #idTipoCliente="ngModel">
+          <option [ngValue]="null">Seleccione un tipo</option>
+          @for (t of tiposCliente; track t.id) {
+            <option [ngValue]="t.id">{{ t.nombre }}</option>
+          }
+        </select>
+        <app-errores-campo [control]="idTipoCliente" [mensajes]="{ required: 'Seleccione el tipo de cliente' }" />
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="email">Correo electrónico</label>
+      <input type="email" id="email" name="email" ngModel required email maxlength="120"
+        pattern="^[^@\s]+@[^@\s]+\.[A-Za-z]{2,}$" autocomplete="email" placeholder="usuario@dominio.pe" #email="ngModel">
+      <app-errores-campo [control]="email" [mensajes]="{
+        required: 'El correo es obligatorio',
+        email: 'Ingrese un correo válido',
+        pattern: 'Ingrese un correo válido, por ejemplo usuario@dominio.pe',
+        maxlength: 'Máximo 120 caracteres'
+      }" />
+    </div>
+
+    @if (miForm.submitted && miForm.invalid) {
+      <p class="aviso-error" role="alert">Revise los campos marcados antes de enviar.</p>
+    }
+
+    <div class="acciones">
+      <button type="submit" class="btn btn-primario">Registrar cliente</button>
+      <button type="button" class="btn btn-secundario" (click)="miForm.resetForm(); enviado = null">Limpiar</button>
+    </div>
+  </form>
+
+  @if (enviado) {
+    <div class="exito" role="status">
+      <strong>Datos enviados correctamente.</strong> Revise la consola del navegador.
+      <pre>{{ enviado | json }}</pre>
+    </div>
+  }
+</section>
