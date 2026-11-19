@@ -1,15 +1,24 @@
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 
 <header class="cabecera">
-  <div class="contenedor cabecera-interna">
-    <a routerLink="/inicio" class="marca">Biblioteca ULS</a>
-    <nav aria-label="Principal">
-      <a routerLink="/inicio" routerLinkActive="activo">Inicio</a>
-      <a routerLink="/cliente/nuevo" routerLinkActive="activo">Cliente</a>
-      <a routerLink="/libro/nuevo" routerLinkActive="activo">Libro</a>
-      <a routerLink="/prestamo/nuevo" routerLinkActive="activo">Préstamo</a>
-    </nav>
-  </div>
+  <nav class="contenedor navbar" aria-label="Principal">
+    <a routerLink="/inicio" class="marca" (click)="cerrarMenu()">Biblioteca ULS</a>
+
+    <!-- Botón hamburguesa: solo se ve en pantallas pequeñas -->
+    <button type="button" class="menu-toggle" (click)="toggleMenu()"
+      [attr.aria-expanded]="menuAbierto" aria-controls="menu-principal"
+      [attr.aria-label]="menuAbierto ? 'Cerrar menú' : 'Abrir menú'">
+      {{ menuAbierto ? '✕' : '☰' }}
+    </button>
+
+    <ul id="menu-principal" class="nav-links" [class.abierto]="menuAbierto">
+      @for (op of opcionesMenu; track op.ruta) {
+        <li>
+          <a [routerLink]="op.ruta" routerLinkActive="activo" (click)="cerrarMenu()">{{ op.texto }}</a>
+        </li>
+      }
+    </ul>
+  </nav>
 </header>
 
 <main id="contenido" class="contenedor" tabindex="-1">

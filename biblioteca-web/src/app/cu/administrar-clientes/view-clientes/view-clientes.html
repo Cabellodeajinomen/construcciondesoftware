@@ -1,0 +1,51 @@
+<section class="encabezado-vista">
+  <div>
+    <h1>Clientes</h1>
+    <p>Cada cliente puede tener hasta {{ maxPrestamos }} préstamos activos.</p>
+  </div>
+  <a class="btn btn-primario" routerLink="/cliente/nuevo">+ Registrar cliente</a>
+</section>
+
+@if (mensaje) {
+  <p class="exito" role="status">{{ mensaje }}</p>
+}
+
+<div class="tabla-scroll">
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre completo</th>
+        <th>DNI</th>
+        <th>Correo</th>
+        <th>Tipo</th>
+        <th>Préstamos</th>
+        <th><span class="sr-only">Acciones</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (cliente of clientes; track cliente.id) {
+        <tr>
+          <td><strong>{{ cliente.nombreCompleto }}</strong></td>
+          <td>{{ cliente.dni }}</td>
+          <td>{{ cliente.email }}</td>
+          <td>{{ cliente.tipoCliente }}</td>
+          <td>{{ cliente.prestamosActivos }} / {{ maxPrestamos }}</td>
+          <td class="acciones-celda">
+            <button type="button" class="btn btn-secundario btn-sm" (click)="editarCliente(cliente)">Editar</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="6">No hay clientes registrados</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+@if (mostrarModal && clienteSeleccionado) {
+  <app-modal-editar-cliente
+    [cliente]="clienteSeleccionado"
+    (guardar)="guardarCliente($event)"
+    (cerrar)="cerrarModal()" />
+}

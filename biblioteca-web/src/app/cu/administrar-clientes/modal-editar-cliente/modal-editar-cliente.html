@@ -1,0 +1,56 @@
+<div class="modal" (click)="clicFondo($event)">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="titulo-editar-cliente">
+    <button type="button" class="modal-cerrar" aria-label="Cerrar" (click)="cerrar.emit()">×</button>
+
+    <h2 id="titulo-editar-cliente">Editar cliente</h2>
+    <p class="subtitulo">Código de cliente: {{ cliente().id }}</p>
+
+    <form #miForm="ngForm" (ngSubmit)="onGuardar(miForm)" novalidate>
+      <div class="campo">
+        <label for="m-nombre">Nombre completo *</label>
+        <input type="text" id="m-nombre" name="nombreCompleto" [ngModel]="cliente().nombreCompleto"
+          required minlength="3" maxlength="150" #nombre="ngModel">
+        <app-errores-campo [control]="nombre" [mensajes]="{
+          required: 'El nombre es obligatorio',
+          minlength: 'Ingrese al menos 3 caracteres'
+        }" />
+      </div>
+
+      <div class="grid-2">
+        <div class="campo">
+          <label for="m-dni">DNI *</label>
+          <input type="text" id="m-dni" name="dni" [ngModel]="cliente().dni" required
+            pattern="^[0-9]{8}$" maxlength="8" inputmode="numeric" #dni="ngModel">
+          <app-errores-campo [control]="dni" [mensajes]="{
+            required: 'El DNI es obligatorio',
+            pattern: 'El DNI debe tener 8 dígitos'
+          }" />
+        </div>
+
+        <div class="campo">
+          <label for="m-tipo">Tipo de cliente *</label>
+          <select id="m-tipo" name="tipoCliente" [ngModel]="cliente().tipoCliente" required>
+            @for (t of tiposCliente; track t.id) {
+              <option [ngValue]="t.nombre">{{ t.nombre }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="m-email">Correo *</label>
+        <input type="email" id="m-email" name="email" [ngModel]="cliente().email" required email
+          maxlength="150" #email="ngModel">
+        <app-errores-campo [control]="email" [mensajes]="{
+          required: 'El correo es obligatorio',
+          email: 'Ingrese un correo válido'
+        }" />
+      </div>
+
+      <div class="acciones">
+        <button type="button" class="btn btn-secundario" (click)="cerrar.emit()">Cancelar</button>
+        <button type="submit" class="btn btn-primario" [disabled]="miForm.invalid">Guardar cambios</button>
+      </div>
+    </form>
+  </div>
+</div>

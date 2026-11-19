@@ -1,0 +1,46 @@
+<section class="encabezado-vista">
+  <div>
+    <h1>Catálogo de libros</h1>
+    <p>{{ libros.length }} títulos registrados. Pulse «Ver detalle» para ver la ficha completa.</p>
+  </div>
+  <a class="btn btn-primario" routerLink="/libro/nuevo">+ Registrar libro</a>
+</section>
+
+<div class="tabla-scroll">
+  <table>
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Autor(es)</th>
+        <th>Año</th>
+        <th>Disponibles</th>
+        <th><span class="sr-only">Acciones</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (libro of libros; track libro.id) {
+        <tr>
+          <td><strong>{{ libro.titulo }}</strong></td>
+          <td>{{ libro.autores.join(', ') }}</td>
+          <td>{{ libro.anioPublicacion }}</td>
+          <td>
+            <span class="estado" [class.estado-ok]="disponibles(libro) > 0" [class.estado-alerta]="disponibles(libro) === 0">
+              {{ disponibles(libro) }} de {{ libro.ejemplares.length }}
+            </span>
+          </td>
+          <td class="acciones-celda">
+            <button type="button" class="btn btn-secundario btn-sm" (click)="verDetalle(libro)">Ver detalle</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5">No hay libros registrados</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+@if (mostrarModal && libroSeleccionado) {
+  <app-modal-detalle-libro [libro]="libroSeleccionado" (cerrar)="cerrarModal()" />
+}

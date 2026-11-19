@@ -8,8 +8,8 @@ import { RouterLink } from '@angular/router';
 })
 export class Inicio {
   formularios = [
-    { ruta: '/cliente/nuevo', titulo: 'Registrar cliente', texto: 'Alta de estudiantes, docentes, administrativos y externos con DNI y correo.' },
-    { ruta: '/libro/nuevo', titulo: 'Registrar libro', texto: 'Alta de un libro con ISBN, idioma, editorial, autores y categorías.' },
-    { ruta: '/prestamo/nuevo', titulo: 'Registrar préstamo', texto: 'Préstamo de uno o más ejemplares disponibles a un cliente.' },
+    { ruta: '/catalogo', titulo: 'Catálogo de libros', texto: 'Consulte la ficha de cada libro y el estado de sus ejemplares.' },
+    { ruta: '/clientes', titulo: 'Clientes', texto: 'Revise y edite los datos de estudiantes, docentes y externos.' },
+    { ruta: '/prestamos', titulo: 'Préstamos', texto: 'Registre devoluciones y calcule multas por retraso.' },
   ];
 }

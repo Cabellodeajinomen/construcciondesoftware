@@ -1,0 +1,49 @@
+<div class="modal" (click)="clicFondo($event)">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="titulo-detalle-libro">
+    <button type="button" class="modal-cerrar" aria-label="Cerrar" (click)="cerrar.emit()">×</button>
+
+    <h2 id="titulo-detalle-libro">{{ libro().titulo }}</h2>
+    <p class="subtitulo">{{ libro().descripcion }}</p>
+
+    <dl class="ficha">
+      <dt>Autor(es)</dt>
+      <dd>{{ libro().autores.join(', ') }}</dd>
+      <dt>ISBN</dt>
+      <dd>{{ libro().isbn }}</dd>
+      <dt>Editorial</dt>
+      <dd>{{ libro().editorial }}</dd>
+      <dt>Año · Edición</dt>
+      <dd>{{ libro().anioPublicacion }} · {{ libro().edicion }}</dd>
+      <dt>Páginas</dt>
+      <dd>{{ libro().numeroPaginas }}</dd>
+      <dt>Idioma</dt>
+      <dd>{{ libro().idioma }}</dd>
+      <dt>Categorías</dt>
+      <dd>{{ libro().categorias.join(', ') }}</dd>
+    </dl>
+
+    <h3>Ejemplares</h3>
+    <div class="tabla-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (ej of libro().ejemplares; track ej.codigo) {
+            <tr>
+              <td>{{ ej.codigo }}</td>
+              <td><span class="estado" [class]="claseEstado(ej.estado)">{{ ej.estado }}</span></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="acciones">
+      <button type="button" class="btn btn-primario" (click)="cerrar.emit()">Cerrar</button>
+    </div>
+  </div>
+</div>

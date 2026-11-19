@@ -1,10 +1,15 @@
 <section class="hero">
   <h1>Biblioteca ULS</h1>
-  <p>Elija qué desea registrar.</p>
+  <p>Elija una opción para empezar.</p>
 </section>
 
 <ul class="opciones">
   @for (f of formularios; track f.ruta) {
-    <li><a [routerLink]="f.ruta">{{ f.titulo }}</a></li>
+    <li>
+      <a [routerLink]="f.ruta">
+        {{ f.titulo }}
+        <small>{{ f.texto }}</small>
+      </a>
+    </li>
   }
 </ul>

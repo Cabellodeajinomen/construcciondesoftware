@@ -1,0 +1,40 @@
+<div class="modal" (click)="clicFondo($event)">
+  <div class="modal-content" role="alertdialog" aria-modal="true" aria-labelledby="titulo-devolucion">
+    <button type="button" class="modal-cerrar" aria-label="Cerrar" (click)="cerrar.emit()">×</button>
+
+    <h2 id="titulo-devolucion">Registrar devolución</h2>
+    <p class="subtitulo">Préstamo N.° {{ prestamo().id }} · {{ prestamo().cliente }}</p>
+
+    <dl class="ficha">
+      <dt>Fecha de préstamo</dt>
+      <dd>{{ prestamo().fechaPrestamo | date: 'dd/MM/yyyy' }}</dd>
+      <dt>Fecha límite</dt>
+      <dd>{{ prestamo().fechaLimite | date: 'dd/MM/yyyy' }}</dd>
+      <dt>Ejemplares</dt>
+      <dd>
+        <ul class="lista-simple">
+          @for (ej of prestamo().ejemplares; track ej.codigo) {
+            <li>{{ ej.codigo }} — {{ ej.titulo }}</li>
+          }
+        </ul>
+      </dd>
+    </dl>
+
+    @if (diasRetraso() > 0) {
+      <div class="aviso-error">
+        Devolución con <strong>{{ diasRetraso() }} día(s) de retraso</strong>
+        (S/ {{ multaPorDia.toFixed(2) }} por día).
+        <div class="total-multa">Multa: S/ {{ multa().toFixed(2) }}</div>
+      </div>
+    } @else {
+      <p class="exito">Devolución dentro del plazo. No corresponde multa.</p>
+    }
+
+    <p>¿Confirma que el cliente entregó todos los ejemplares?</p>
+
+    <div class="acciones">
+      <button type="button" class="btn btn-secundario" (click)="cerrar.emit()">Cancelar</button>
+      <button type="button" class="btn btn-primario" (click)="confirmar.emit(multa())">Confirmar devolución</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<section class="encabezado-vista">
+  <div>
+    <h1>Préstamos</h1>
+    <p>Registre la devolución de los ejemplares prestados.</p>
+  </div>
+  <a class="btn btn-primario" routerLink="/prestamo/nuevo">+ Registrar préstamo</a>
+</section>
+
+@if (mensaje) {
+  <p class="exito" role="status">{{ mensaje }}</p>
+}
+
+<div class="tabla-scroll">
+  <table>
+    <thead>
+      <tr>
+        <th>N.°</th>
+        <th>Cliente</th>
+        <th>Ejemplares</th>
+        <th>Fecha límite</th>
+        <th>Estado</th>
+        <th><span class="sr-only">Acciones</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (p of prestamos; track p.id) {
+        <tr>
+          <td>{{ p.id }}</td>
+          <td><strong>{{ p.cliente }}</strong></td>
+          <td>{{ p.ejemplares.length }}</td>
+          <td>{{ p.fechaLimite | date: 'dd/MM/yyyy' }}</td>
+          <td>
+            @if (p.devuelto) {
+              <span class="estado estado-neutro">Devuelto</span>
+            } @else if (vencido(p)) {
+              <span class="estado estado-alerta">Vencido</span>
+            } @else {
+              <span class="estado estado-ok">Vigente</span>
+            }
+          </td>
+          <td class="acciones-celda">
+            @if (!p.devuelto) {
+              <button type="button" class="btn btn-secundario btn-sm" (click)="registrarDevolucion(p)">Devolver</button>
+            }
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="6">No hay préstamos registrados</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+@if (mostrarModal && prestamoSeleccionado) {
+  <app-modal-devolucion
+    [prestamo]="prestamoSeleccionado"
+    (confirmar)="confirmarDevolucion($event)"
+    (cerrar)="cerrarModal()" />
+}
