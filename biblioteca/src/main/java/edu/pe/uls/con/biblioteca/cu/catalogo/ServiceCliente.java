@@ -8,9 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+import java.util.List;
 
 @Service
 public class ServiceCliente {
+    public List<Cliente> listarClientes() {
+        return repoCliente.findAll();
+    }
 
     @Autowired
     RepositoryCliente repoCliente;

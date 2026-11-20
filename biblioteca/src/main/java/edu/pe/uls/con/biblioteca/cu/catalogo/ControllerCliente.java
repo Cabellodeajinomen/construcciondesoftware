@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
 public class ControllerCliente {
@@ -18,6 +19,13 @@ public class ControllerCliente {
         this.mapperCliente = mapperCliente;
     }
 
+    @GetMapping("/clientes")
+    public List<ResponseCliente> listarClientes() {
+        return serviceCliente.listarClientes().stream()
+                .map(mapperCliente::toResponse)
+                .toList();
+    }
+    
     @PostMapping("/cliente/nuevo")
     public ResponseCliente guardarCliente(@RequestBody RequestCliente nuevo) {
         Cliente cliente = mapperCliente.toCliente(nuevo);
